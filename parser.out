@@ -1,245 +1,117 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
+Unused terminals:
+
+    AND
+    COMMENTBLOCK
+    COMMENTLINE
+    DIVIDE
+    ELSE
+    EQUALTO
+    FOR
+    GREATER
+    GREATEREQUAL
+    IF
+    LBRACKET
+    LCURLY
+    LESSER
+    LESSEREQUAL
+    MAIN
+    MINUS
+    MOD
+    NOT
+    NOTEQUAL
+    NUM_DEC
+    NUM_INT
+    OR
+    PLUS
+    PRINTLN
+    RBRACKET
+    RCURLY
+    RETURN
+    SCANF
+    TEXTO
+    TIMES
+    VOID
+    WHILE
+
 Grammar
 
-Rule 0     S' -> expression
-Rule 1     expression -> expression PLUS term
-Rule 2     expression -> expression MINUS term
-Rule 3     expression -> term
-Rule 4     term -> term TIMES factor
-Rule 5     term -> term DIVIDE factor
-Rule 6     term -> factor
-Rule 7     factor -> NUMBER
-Rule 8     factor -> LPAREN expression RPAREN
+Rule 0     S' -> Programa
+Rule 1     Programa -> Declaracao
+Rule 2     Declaracao -> DeclaracaoVariavel
+Rule 3     Declaracao -> DeclaracaoFuncao
+Rule 4     Declaracao -> DeclaracaoEstrutura
+Rule 5     Declaracao -> Comentario
+Rule 6     DeclaracaoVariavel -> Tipo ID SEMICOLLON
+Rule 7     DeclaracaoVariavel -> Tipo ID EQUALS Expressao SEMICOLLON
+Rule 8     Tipo -> INT
+Rule 9     Tipo -> FLOAT
+Rule 10    Tipo -> DOUBLE
+Rule 11    Tipo -> CHAR
+Rule 12    Tipo -> BOOLEAN
+Rule 13    DeclaracaoFuncao -> Tipo ID LPAREN Parametros RPAREN Bloco
+Rule 14    Parametros -> Parametro
+Rule 15    Parametros -> Parametro COMMA Parametros
 
 Terminals, with rules where they appear
 
-DIVIDE               : 5
-LPAREN               : 8
-MINUS                : 2
-NUMBER               : 7
-PLUS                 : 1
-RPAREN               : 8
-TIMES                : 4
+AND                  : 
+BOOLEAN              : 12
+CHAR                 : 11
+COMMA                : 15
+COMMENTBLOCK         : 
+COMMENTLINE          : 
+DIVIDE               : 
+ELSE                 : 
+EQUALS               : 7
+EQUALTO              : 
+FLOAT                : 9
+FOR                  : 
+GREATER              : 
+GREATEREQUAL         : 
+ID                   : 6 7 13
+IF                   : 
+INT                  : 8
+LBRACKET             : 
+LCURLY               : 
+LESSER               : 
+LESSEREQUAL          : 
+LPAREN               : 13
+MAIN                 : 
+MINUS                : 
+MOD                  : 
+NOT                  : 
+NOTEQUAL             : 
+NUM_DEC              : 
+NUM_INT              : 
+OR                   : 
+PLUS                 : 
+PRINTLN              : 
+RBRACKET             : 
+RCURLY               : 
+RETURN               : 
+RPAREN               : 13
+SCANF                : 
+SEMICOLLON           : 6 7
+TEXTO                : 
+TIMES                : 
+VOID                 : 
+WHILE                : 
 error                : 
 
 Nonterminals, with rules where they appear
 
-expression           : 1 2 8 0
-factor               : 4 5 6
-term                 : 1 2 3 4 5
-
-Parsing method: LALR
-
-state 0
-
-    (0) S' -> . expression
-    (1) expression -> . expression PLUS term
-    (2) expression -> . expression MINUS term
-    (3) expression -> . term
-    (4) term -> . term TIMES factor
-    (5) term -> . term DIVIDE factor
-    (6) term -> . factor
-    (7) factor -> . NUMBER
-    (8) factor -> . LPAREN expression RPAREN
-
-    NUMBER          shift and go to state 4
-    LPAREN          shift and go to state 5
-
-    expression                     shift and go to state 1
-    term                           shift and go to state 2
-    factor                         shift and go to state 3
-
-state 1
-
-    (0) S' -> expression .
-    (1) expression -> expression . PLUS term
-    (2) expression -> expression . MINUS term
-
-    PLUS            shift and go to state 6
-    MINUS           shift and go to state 7
-
-
-state 2
-
-    (3) expression -> term .
-    (4) term -> term . TIMES factor
-    (5) term -> term . DIVIDE factor
-
-    PLUS            reduce using rule 3 (expression -> term .)
-    MINUS           reduce using rule 3 (expression -> term .)
-    $end            reduce using rule 3 (expression -> term .)
-    RPAREN          reduce using rule 3 (expression -> term .)
-    TIMES           shift and go to state 8
-    DIVIDE          shift and go to state 9
-
-
-state 3
-
-    (6) term -> factor .
-
-    TIMES           reduce using rule 6 (term -> factor .)
-    DIVIDE          reduce using rule 6 (term -> factor .)
-    PLUS            reduce using rule 6 (term -> factor .)
-    MINUS           reduce using rule 6 (term -> factor .)
-    $end            reduce using rule 6 (term -> factor .)
-    RPAREN          reduce using rule 6 (term -> factor .)
-
-
-state 4
-
-    (7) factor -> NUMBER .
-
-    TIMES           reduce using rule 7 (factor -> NUMBER .)
-    DIVIDE          reduce using rule 7 (factor -> NUMBER .)
-    PLUS            reduce using rule 7 (factor -> NUMBER .)
-    MINUS           reduce using rule 7 (factor -> NUMBER .)
-    $end            reduce using rule 7 (factor -> NUMBER .)
-    RPAREN          reduce using rule 7 (factor -> NUMBER .)
-
-
-state 5
-
-    (8) factor -> LPAREN . expression RPAREN
-    (1) expression -> . expression PLUS term
-    (2) expression -> . expression MINUS term
-    (3) expression -> . term
-    (4) term -> . term TIMES factor
-    (5) term -> . term DIVIDE factor
-    (6) term -> . factor
-    (7) factor -> . NUMBER
-    (8) factor -> . LPAREN expression RPAREN
-
-    NUMBER          shift and go to state 4
-    LPAREN          shift and go to state 5
-
-    expression                     shift and go to state 10
-    term                           shift and go to state 2
-    factor                         shift and go to state 3
-
-state 6
-
-    (1) expression -> expression PLUS . term
-    (4) term -> . term TIMES factor
-    (5) term -> . term DIVIDE factor
-    (6) term -> . factor
-    (7) factor -> . NUMBER
-    (8) factor -> . LPAREN expression RPAREN
-
-    NUMBER          shift and go to state 4
-    LPAREN          shift and go to state 5
-
-    term                           shift and go to state 11
-    factor                         shift and go to state 3
-
-state 7
-
-    (2) expression -> expression MINUS . term
-    (4) term -> . term TIMES factor
-    (5) term -> . term DIVIDE factor
-    (6) term -> . factor
-    (7) factor -> . NUMBER
-    (8) factor -> . LPAREN expression RPAREN
-
-    NUMBER          shift and go to state 4
-    LPAREN          shift and go to state 5
-
-    term                           shift and go to state 12
-    factor                         shift and go to state 3
-
-state 8
-
-    (4) term -> term TIMES . factor
-    (7) factor -> . NUMBER
-    (8) factor -> . LPAREN expression RPAREN
-
-    NUMBER          shift and go to state 4
-    LPAREN          shift and go to state 5
-
-    factor                         shift and go to state 13
-
-state 9
-
-    (5) term -> term DIVIDE . factor
-    (7) factor -> . NUMBER
-    (8) factor -> . LPAREN expression RPAREN
-
-    NUMBER          shift and go to state 4
-    LPAREN          shift and go to state 5
-
-    factor                         shift and go to state 14
-
-state 10
-
-    (8) factor -> LPAREN expression . RPAREN
-    (1) expression -> expression . PLUS term
-    (2) expression -> expression . MINUS term
-
-    RPAREN          shift and go to state 15
-    PLUS            shift and go to state 6
-    MINUS           shift and go to state 7
-
-
-state 11
-
-    (1) expression -> expression PLUS term .
-    (4) term -> term . TIMES factor
-    (5) term -> term . DIVIDE factor
-
-    PLUS            reduce using rule 1 (expression -> expression PLUS term .)
-    MINUS           reduce using rule 1 (expression -> expression PLUS term .)
-    $end            reduce using rule 1 (expression -> expression PLUS term .)
-    RPAREN          reduce using rule 1 (expression -> expression PLUS term .)
-    TIMES           shift and go to state 8
-    DIVIDE          shift and go to state 9
-
-
-state 12
-
-    (2) expression -> expression MINUS term .
-    (4) term -> term . TIMES factor
-    (5) term -> term . DIVIDE factor
-
-    PLUS            reduce using rule 2 (expression -> expression MINUS term .)
-    MINUS           reduce using rule 2 (expression -> expression MINUS term .)
-    $end            reduce using rule 2 (expression -> expression MINUS term .)
-    RPAREN          reduce using rule 2 (expression -> expression MINUS term .)
-    TIMES           shift and go to state 8
-    DIVIDE          shift and go to state 9
-
-
-state 13
-
-    (4) term -> term TIMES factor .
-
-    TIMES           reduce using rule 4 (term -> term TIMES factor .)
-    DIVIDE          reduce using rule 4 (term -> term TIMES factor .)
-    PLUS            reduce using rule 4 (term -> term TIMES factor .)
-    MINUS           reduce using rule 4 (term -> term TIMES factor .)
-    $end            reduce using rule 4 (term -> term TIMES factor .)
-    RPAREN          reduce using rule 4 (term -> term TIMES factor .)
-
-
-state 14
-
-    (5) term -> term DIVIDE factor .
-
-    TIMES           reduce using rule 5 (term -> term DIVIDE factor .)
-    DIVIDE          reduce using rule 5 (term -> term DIVIDE factor .)
-    PLUS            reduce using rule 5 (term -> term DIVIDE factor .)
-    MINUS           reduce using rule 5 (term -> term DIVIDE factor .)
-    $end            reduce using rule 5 (term -> term DIVIDE factor .)
-    RPAREN          reduce using rule 5 (term -> term DIVIDE factor .)
-
-
-state 15
-
-    (8) factor -> LPAREN expression RPAREN .
-
-    TIMES           reduce using rule 8 (factor -> LPAREN expression RPAREN .)
-    DIVIDE          reduce using rule 8 (factor -> LPAREN expression RPAREN .)
-    PLUS            reduce using rule 8 (factor -> LPAREN expression RPAREN .)
-    MINUS           reduce using rule 8 (factor -> LPAREN expression RPAREN .)
-    $end            reduce using rule 8 (factor -> LPAREN expression RPAREN .)
-    RPAREN          reduce using rule 8 (factor -> LPAREN expression RPAREN .)
+Bloco                : 13
+Comentario           : 5
+DOUBLE               : 10
+Declaracao           : 1
+DeclaracaoEstrutura  : 4
+DeclaracaoFuncao     : 3
+DeclaracaoVariavel   : 2
+Expressao            : 7
+Parametro            : 14 15
+Parametros           : 13 15
+Programa             : 0
+Tipo                 : 6 7 13
 

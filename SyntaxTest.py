@@ -1,7 +1,7 @@
-from exemplolex import lexer
-from exemplosinta import parser
+from AnalisadorLexico import lexer
+from AnalisadorSintatico import parser
 def main():
-    data = "4 * (3 + 4)"
+    data = "int job ;"
     lexer.input(data)
     result = parser.parse(data, lexer=lexer)
     print(f"Resultado da expressão: {result}")
