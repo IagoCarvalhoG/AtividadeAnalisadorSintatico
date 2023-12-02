@@ -23,15 +23,7 @@ def p_Declaracao_Variavel(p):
         p[0] = p[1] + ' ' + p[2] + ' ' + p[3]
     else:
         p[0] = p[1] + ' ' + p[2] + ' ' + p[3] + ' ' + p[4] + ' ' + p[5]
-def p_Tipo(p):
-    '''
-    Tipo : INT
-            | FLOAT
-            | DOUBLE
-            | CHAR
-            | BOOLEAN
-    '''
-    p[0] = p[1]
+
 # Declaracao de funcao
 def p_DeclaracaoFuncao(p):
     'DeclaracaoFuncao : Tipo ID LPAREN Parametros RPAREN Bloco'

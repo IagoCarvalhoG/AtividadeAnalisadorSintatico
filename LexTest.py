@@ -2,8 +2,6 @@ from AnalisadorLexico import lexer
 data = '''
 // Este é um comentário de linha.
 int dobrar(int x) {
-/* Este é um comentário
-de múltiplas linhas. */
 return x * 2;
 }
 '''

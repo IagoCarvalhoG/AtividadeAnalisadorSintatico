@@ -6,7 +6,7 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'DIVIDE LPAREN MINUS NUMBER PLUS RPAREN TIMES\n    expression : expression PLUS term\n            | expression MINUS term\n            | term\n    \n    term : term TIMES factor\n        | term DIVIDE factor\n        | factor\n    \n    factor : NUMBER\n        | LPAREN expression RPAREN\n    '
+_lr_signature = 'DIVIDE LPAREN MINUS NUMBER PLUS RPAREN TIMES\n    Programa : Programa PLUS term\n            | Programa MINUS term\n            | term\n    \n    term : term TIMES factor\n        | term DIVIDE factor\n        | factor\n    \n    factor : NUMBER\n        | LPAREN Programa RPAREN\n    '
     
 _lr_action_items = {'NUMBER':([0,5,6,7,8,9,],[4,4,4,4,4,4,]),'LPAREN':([0,5,6,7,8,9,],[5,5,5,5,5,5,]),'$end':([1,2,3,4,11,12,13,14,15,],[0,-3,-6,-7,-1,-2,-4,-5,-8,]),'PLUS':([1,2,3,4,10,11,12,13,14,15,],[6,-3,-6,-7,6,-1,-2,-4,-5,-8,]),'MINUS':([1,2,3,4,10,11,12,13,14,15,],[7,-3,-6,-7,7,-1,-2,-4,-5,-8,]),'RPAREN':([2,3,4,10,11,12,13,14,15,],[-3,-6,-7,15,-1,-2,-4,-5,-8,]),'TIMES':([2,3,4,11,12,13,14,15,],[8,-6,-7,8,8,-4,-5,-8,]),'DIVIDE':([2,3,4,11,12,13,14,15,],[9,-6,-7,9,9,-4,-5,-8,]),}
 
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'expression':([0,5,],[1,10,]),'term':([0,5,6,7,],[2,2,11,12,]),'factor':([0,5,6,7,8,9,],[3,3,3,3,13,14,]),}
+_lr_goto_items = {'Programa':([0,5,],[1,10,]),'term':([0,5,6,7,],[2,2,11,12,]),'factor':([0,5,6,7,8,9,],[3,3,3,3,13,14,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,13 +26,13 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> expression","S'",1,None,None,None),
-  ('expression -> expression PLUS term','expression',3,'p_expression','exemplosinta.py',6),
-  ('expression -> expression MINUS term','expression',3,'p_expression','exemplosinta.py',7),
-  ('expression -> term','expression',1,'p_expression','exemplosinta.py',8),
+  ("S' -> Programa","S'",1,None,None,None),
+  ('Programa -> Programa PLUS term','Programa',3,'p_Programa','exemplosinta.py',6),
+  ('Programa -> Programa MINUS term','Programa',3,'p_Programa','exemplosinta.py',7),
+  ('Programa -> term','Programa',1,'p_Programa','exemplosinta.py',8),
   ('term -> term TIMES factor','term',3,'p_term','exemplosinta.py',19),
   ('term -> term DIVIDE factor','term',3,'p_term','exemplosinta.py',20),
   ('term -> factor','term',1,'p_term','exemplosinta.py',21),
   ('factor -> NUMBER','factor',1,'p_factor','exemplosinta.py',32),
-  ('factor -> LPAREN expression RPAREN','factor',3,'p_factor','exemplosinta.py',33),
+  ('factor -> LPAREN Programa RPAREN','factor',3,'p_factor','exemplosinta.py',33),
 ]

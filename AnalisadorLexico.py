@@ -1,10 +1,6 @@
 from ply import lex
 # Regras para palavvras reservadas
 reserved = {
-    'int' : 'INT',
-    'float' : 'FLOAT',
-    'char': 'CHAR',
-    'boolean' : 'BOOLEAN',
     'void' : 'VOID',
     'if' : 'IF',
     'else' : 'ELSE',
@@ -16,8 +12,8 @@ reserved = {
     'return' : 'RETURN' 
 }
 # Lista de tokens
-tokens = (
-['NUM_INT',
+tokens = ('TIPO',
+'NUM_INT',
 'NUM_DEC',
 'ID',
 'TEXTO',
@@ -45,12 +41,14 @@ tokens = (
 'COMMA',
 'SEMICOLLON',
 'COMMENTLINE',
-'COMMENTBLOCK'] + list(reserved.values())
+'COMMENTBLOCK'
 )
 # Regra para id
+def t_TIPO(t):
+    r'int | double | float | boolean'
+    return t
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
-    t.type = reserved.get(t.value,'ID')    # Check for reserved words
     return t
 # Regra para texto
 t_TEXTO = r'"[^"]*"'
@@ -107,5 +105,6 @@ def t_newline(t):
 def t_error(t):
     print(f"Caractere inesperado: {t.value[0]}")
     t.lexer.skip(1)
+
 # Criar o analisador léxico
 lexer = lex.lex()
