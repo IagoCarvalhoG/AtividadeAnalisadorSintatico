@@ -1,6 +1,7 @@
 from AnalisadorLexico import lexer
 data = '''
 // Este é um comentário de linha.
+String oxítona = "tatu";
 int dobrar(int x) {
 return x * 2;
 }

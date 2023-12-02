@@ -12,7 +12,8 @@ reserved = {
     'return' : 'RETURN' 
 }
 # Lista de tokens
-tokens = ('TIPO',
+tokens = (
+['TIPO',
 'NUM_INT',
 'NUM_DEC',
 'ID',
@@ -41,15 +42,24 @@ tokens = ('TIPO',
 'COMMA',
 'SEMICOLLON',
 'COMMENTLINE',
-'COMMENTBLOCK'
+'COMMENTBLOCK',
+'ARROW',
+'DOT',
+'PARAMETER',
+'ELLIPSIS'] # 3 pontos
++ list(reserved.values())
 )
 # Regra para id
 def t_TIPO(t):
-    r'int | double | float | boolean'
+    r'int|double|float|char|boolean'
+    t.value = float(t.value)
     return t
+
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
+    t.type = reserved.get(t.value, 'ID')
     return t
+
 # Regra para texto
 t_TEXTO = r'"[^"]*"'
 # Regra para ignorar comentario linha
@@ -85,6 +95,9 @@ t_LCURLY = r'\{'
 t_RCURLY = r'\}'
 t_COMMA = r','
 t_SEMICOLLON = r';'
+t_ELLIPSIS = r'\.\.\.'
+t_DOT = r'.'
+t_ARROW = r'->'
 #Regra para numeros float
 def t_NUM_DEC(t):
     r'\d+\.\d+'
