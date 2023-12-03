@@ -2,7 +2,10 @@ from ply import yacc
 from AnalisadorLexico import tokens
 
 def p_Programa(p):
-    'Programa : Declaracao'
+    '''
+    Programa : Declaracao
+                | Declaracao Programa
+    '''
 # Declaracao
 def p_Declaracao(p):
     '''
@@ -139,7 +142,6 @@ def p_Primaria(p):
 def p_Argumentos(p):
     '''
         Argumentos :
-
     '''
 
 # Manipulador de erros

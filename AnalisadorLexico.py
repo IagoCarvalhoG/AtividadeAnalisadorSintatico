@@ -42,7 +42,6 @@ tokens = (
 'DOT',
 'EXPRESSAOLISTA',
 'ELLIPSIS', # 3 pontos
-
 )
 
 # Regras para cada token
@@ -59,8 +58,14 @@ t_NOT = r'!'
 t_PLUS = r'\+'
 t_MINUS = r'-'
 t_TIMES = r'\*'
-t_MODEQUAL = r'%='
 t_DIVIDE = r'/'
+t_PLUSEQUAL = r'\+='
+t_MINUSEQUAL = r'-='
+t_TIMESEQUAL = r'\*='
+t_DIVEQUAL = r'/='
+t_MODEQUAL = r'%='
+t_ANDANDEQUAL = r'&&='
+t_OROREQUAL = r'\|\|='
 t_GREATER = r'>'
 t_LESSER = r'<'
 t_LPAREN = r'\('
@@ -75,6 +80,7 @@ t_ELLIPSIS = r'\.\.\.'
 t_DOT = r'.'
 t_ARROW = r'->'
 
+
 def t_TIPO(t):
     r'int|String|double|float|char|boolean'
     t.value = str(t.value)
@@ -84,13 +90,8 @@ def t_TEXTO(t):
     r'\"[^\"]*\"'
     return t
 
-#def t_PARAMETER(t):
-#    r'TIPO ID|TIPO ID LBRACKET RBRACKET|TIPO ID ELLIPSIS ID'
-#    return t
-
 def t_ID(t):
-    r'[a-zA-Z_][a-zA-Z_0-9]*'
-    #t.type = reserved.get(t.value, 'ID')
+    r'[a-zA-Zà-úÀ-Ú][a-zA-Z_0-9]*'
     t.value = str(t.value)
     return t
 
@@ -99,18 +100,18 @@ def t_COMMENTLINE(t):
     r'//.*'
     return t
 
-
 def t_NUM_DEC(t):
     r'\d+\.\d+'
     t.value = float(t.value)
     return t
+
 # Regra para números inteiros
 def t_NUM_INT(t):
     r'\d+'
     t.value = int(t.value)
     return t
 # Ignorar caracteres em branco
-t_ignore = ' \t'
+t_ignore = ' \t\n'
 
 # Manipulador de erros
 def t_error(t):
