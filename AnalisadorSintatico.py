@@ -24,27 +24,27 @@ def p_Declaracao_Variavel(p):
     elif len(p) == 6:
         p[0] = p[1] + ' ' + p[2] + ' ' + p[3] + ' ' + p[4] + ' ' + p[5]
 
+def p_Array(p):
+    """Array : ID LBRACKET RBRACKET
+            |ID LBRACKET Expressao RBRACKET
+            |LCURLY EXPRESSAOLISTA RCURLY"""
+    p[0] = p[1] + ' ' + p[2] + ' ' + p[3]
+
 # Declaracao de funcao
 def p_DeclaracaoFuncao(p):
     'DeclaracaoFuncao : TIPO ID LPAREN Parametros RPAREN Bloco'
-    p[0] = p[1] + ' ' + p[2] + ' ' + p[3] + ' ' + p[4] + ' ' + p[5] + ' ' + p[6]
+    if len(p) == 7:
+        p[0] = p[1] + ' ' + p[2] + ' ' + p[3] + ' ' + p[4] + ' ' + p[5] + ' ' + p[6]
 # Parametros de funcao
 def p_Parametros(p):
     '''
     Parametros : PARAMETER
             | PARAMETER COMMA Parametros
-            | TIPO ID
-            | TIPO ID LBRACKET RBRACKET
-            | TIPO ID ELLIPSIS ID
     '''
     if len(p) == 2:
-        p[0] = p[1] 
-    elif len(p) == 3:
-        p[0] = p[1] + ' ' + p[2]
+        p[0] = p[1]
     elif len(p) == 4:
         p[0] = p[1] + ' ' + p[2] + ' ' + p[3]
-    elif len(p) == 5:
-        p[0] = p[1] + ' ' + p[2] + ' ' + p[3] + ' ' + p[4]
 
 
 def p_Comentario(p):
@@ -181,6 +181,7 @@ def p_Primaria(p):
    Primaria : ID
             | NUM_INT
             | NUM_DEC
+            | TEXTO
             | LPAREN Expressao LPAREN
    '''
 

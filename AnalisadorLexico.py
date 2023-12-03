@@ -46,18 +46,24 @@ tokens = (
 'ARROW',
 'DOT',
 'PARAMETER',
-'ELLIPSIS'] # 3 pontos
+'EXPRESSAOLISTA',
+'ELLIPSIS',] # 3 pontos
 + list(reserved.values())
 )
 # Regra para id
 def t_TIPO(t):
     r'int|double|float|char|boolean'
-    t.value = float(t.value)
+    t.value = str(t.value)
+    return t
+
+def t_PARAMETER(t):
+    r'TIPO ID|TIPO ID LBRACKET RBRACKET|TIPO ID ELLIPSIS ID'
     return t
 
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
-    t.type = reserved.get(t.value, 'ID')
+    #t.type = reserved.get(t.value, 'ID')
+    t.value = str(t.value)
     return t
 
 # Regra para texto
