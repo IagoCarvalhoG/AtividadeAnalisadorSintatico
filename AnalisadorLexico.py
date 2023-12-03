@@ -1,19 +1,8 @@
 from ply import lex
-# Regras para palavvras reservadas
-reserved = {
-    'void' : 'VOID',
-    'if' : 'IF',
-    'else' : 'ELSE',
-    'for' : 'FOR',
-    'while' : 'WHILE',
-    'scanf' : 'SCANF',
-    'println' : 'PRINTLN',
-    'main' : 'MAIN',
-    'return' : 'RETURN' 
-}
+
 # Lista de tokens
 tokens = (
-['TIPO',
+'TIPO',
 'NUM_INT',
 'NUM_DEC',
 'ID',
@@ -33,6 +22,13 @@ tokens = (
 'LESSEREQUAL',
 'NOTEQUAL',
 'EQUALTO',
+'PLUSEQUAL',
+'MINUSEQUAL',
+'TIMESEQUAL',
+'DIVEQUAL',
+'ANDANDEQUAL',
+'OROREQUAL',
+'MODEQUAL',
 'LPAREN',
 'RPAREN',
 'LBRACKET',
@@ -42,41 +38,14 @@ tokens = (
 'COMMA',
 'SEMICOLLON',
 'COMMENTLINE',
-'COMMENTBLOCK',
 'ARROW',
 'DOT',
-'PARAMETER',
 'EXPRESSAOLISTA',
-'ELLIPSIS',] # 3 pontos
-+ list(reserved.values())
+'ELLIPSIS', # 3 pontos
+
 )
-# Regra para id
-def t_TIPO(t):
-    r'int|double|float|char|boolean'
-    t.value = str(t.value)
-    return t
 
-def t_PARAMETER(t):
-    r'TIPO ID|TIPO ID LBRACKET RBRACKET|TIPO ID ELLIPSIS ID'
-    return t
-
-def t_ID(t):
-    r'[a-zA-Z_][a-zA-Z_0-9]*'
-    #t.type = reserved.get(t.value, 'ID')
-    t.value = str(t.value)
-    return t
-
-# Regra para texto
-t_TEXTO = r'"[^"]*"'
-# Regra para ignorar comentario linha
-def t_COMMENTLINE(t):
-    r'//.*'
-    pass
-# Regra para ignorar comentario bloco
-#def t_COMMENTBLOCK(t):
-#    r'^/\*'
-#    pass
-# Regras para token operadores duplos
+# Regras para cada token
 t_GREATEREQUAL = r'>='
 t_LESSEREQUAL = r'<='
 t_NOTEQUAL = r'!='
@@ -90,6 +59,7 @@ t_NOT = r'!'
 t_PLUS = r'\+'
 t_MINUS = r'-'
 t_TIMES = r'\*'
+t_MODEQUAL = r'%='
 t_DIVIDE = r'/'
 t_GREATER = r'>'
 t_LESSER = r'<'
@@ -104,7 +74,32 @@ t_SEMICOLLON = r';'
 t_ELLIPSIS = r'\.\.\.'
 t_DOT = r'.'
 t_ARROW = r'->'
-#Regra para numeros float
+
+def t_TIPO(t):
+    r'int|String|double|float|char|boolean'
+    t.value = str(t.value)
+    return t
+
+def t_TEXTO(t):
+    r'\"[^\"]*\"'
+    return t
+
+#def t_PARAMETER(t):
+#    r'TIPO ID|TIPO ID LBRACKET RBRACKET|TIPO ID ELLIPSIS ID'
+#    return t
+
+def t_ID(t):
+    r'[a-zA-Z_][a-zA-Z_0-9]*'
+    #t.type = reserved.get(t.value, 'ID')
+    t.value = str(t.value)
+    return t
+
+# Regra para ignorar comentario linha
+def t_COMMENTLINE(t):
+    r'//.*'
+    return t
+
+
 def t_NUM_DEC(t):
     r'\d+\.\d+'
     t.value = float(t.value)
@@ -116,14 +111,12 @@ def t_NUM_INT(t):
     return t
 # Ignorar caracteres em branco
 t_ignore = ' \t'
-# Pegar nova linha
-def t_newline(t):
-    r'\n+'
-    t.lexer.lineno += t.value.count("\n")
+
 # Manipulador de erros
 def t_error(t):
     print(f"Caractere inesperado: {t.value[0]}")
     t.lexer.skip(1)
+
 
 # Criar o analisador léxico
 lexer = lex.lex()
